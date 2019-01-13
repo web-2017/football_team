@@ -5,10 +5,13 @@ export const Tag = props => {
   const template = (
     <div
       style={{
-        ...props.add,
+        background: props.bck,
+        fontSize: props.size,
+        color: props.color,
         padding: "5px 10px",
         display: "inline-block",
         fontFamily: "Righteous",
+        ...props.add,
       }}
     >
       {props.children}
