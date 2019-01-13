@@ -1,51 +1,50 @@
-import React, { Component } from "react";
-import Slide from "react-reveal/Slide";
+import React, { Component } from 'react';
+import { firebaseMatches } from '../../../firebase';
+import { firebaseLooper, reverseArray } from '../../ui/misc';
 
-// databse
-import { firebaseMatches } from "../../../fireBase";
-import { firebaseLooper } from "../../ui/misc";
-import { reverseArray } from "../../ui/misc";
+import MatchesBlock from '../../ui/matches_block';
+import Slide from 'react-reveal/Slide'
 
-import MatchesBlock from "../../ui/matches_block";
+class Blocks extends Component {
 
-export default class Blocks extends Component {
-  state = {
-    matches: [],
-  };
+    state = {
+        matches:[]
+    }
 
-  componentDidMount() {
-    firebaseMatches
-      .limitToLast(7)
-      .once("value")
-      .then(snapshot => {
-        // console.log(snapshot.val());
-        // we take a data from firebaseLooper
-        const matches = firebaseLooper(snapshot);
-        // console.log(matches);
+    componentDidMount(){
+        firebaseMatches.limitToLast(6).once('value').then((snapshot)=>{
+            const matches = firebaseLooper(snapshot);
 
-        this.setState({ matches: reverseArray(matches) });
-      });
-  }
+            this.setState({
+                matches: reverseArray(matches)
+            });
+        })
+    }
 
-  showMatches = matches =>
-    matches
-      ? matches.map(match => (
-          <Slide bottom key={match.id}>
-            <div className="item">
-              <div className="wrapper">
-                <MatchesBlock match={match} />
-              </div>
+
+    showMatches = (matches) => (
+        matches ?
+            matches.map((match)=>(
+                <Slide bottom key={match.id}>
+                    <div className="item">
+                        <div className="wrapper">
+                            <MatchesBlock match={match}/>
+                        </div>
+                    </div>
+                </Slide>
+            ))
+        :null
+    )
+
+
+    render() {
+        console.log(this.state)
+        return (
+            <div className="home_matches">
+                {this.showMatches(this.state.matches)}
             </div>
-          </Slide>
-        ))
-      : null;
-
-  render() {
-    // console.log(this.state);
-    return (
-      <div className="home_matches">
-        {this.showMatches(this.state.matches)}
-      </div>
-    );
-  }
+        );
+    }
 }
+
+export default Blocks;
