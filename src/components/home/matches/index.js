@@ -1,16 +1,23 @@
 import React from "react";
 import { Tag } from "../../ui/misc";
+import Blocks from "./Blocks";
 
 const MatchesHome = () => {
   return (
     <div className="home_matches_wrapper">
       <div className="container">
         <Tag
-          add={{ background: "#0e1731", fontSize: "50px", color: "#fff" }}
+          add={{
+            background: "#0e1731",
+            fontSize: "50px",
+            color: "#fff",
+          }}
         >
           Matches
         </Tag>
-        BLOCK
+
+        <Blocks />
+
         <Tag
           add={{ background: "#fff", fontSize: "22px", color: "#000" }}
           link={true}
